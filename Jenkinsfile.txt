@@ -14,7 +14,7 @@ pipeline {
         // Where your Nexus is running
         NEXUS_URL = "localhost:8081"
         // Repository where we will upload the artifact
-        NEXUS_REPOSITORY = "mymaven1"
+        NEXUS_REPOSITORY = "maven-snapshots"
         // Jenkins credential id to authenticate to Nexus OSS
         NEXUS_CREDENTIAL_ID = "NexusCredentials"
     }
@@ -23,7 +23,7 @@ pipeline {
             steps {
                 script {
                     // Let's clone the source
-                    git 'https://github.com/prasad9898/mymaven1.git';
+                    git 'https://github.com/prasad9898/testproject1.git';
                 }
             }
         }
@@ -66,7 +66,7 @@ pipeline {
                             protocol: NEXUS_PROTOCOL,
                             nexusUrl: NEXUS_URL,
                             groupId: pom.groupId,
-                            version: '${BUILD_NUMBER}',
+                            version: pom.version,
                             repository: NEXUS_REPOSITORY,
                             credentialsId: NEXUS_CREDENTIAL_ID,
                             artifacts: [
@@ -90,12 +90,12 @@ pipeline {
         }
 
 
-stage ('deploy'){
-   steps {
-	script {
-       bat ''' D:\Laptop\Software\curl-7.68.0-win64-mingw\bin\curl http://localhost:8081/repository/mymaven1/com/javatpoint/CubeGeneratorWeb/1/CubeGeneratorWeb-1.war -o D:\Laptop\Software\Tomcat\apache-tomcat-8.5.51\webapps\\CubeGeneratorWeb-1.war'''
-	}
-	}
-	}
+//stage ('deploy'){
+  // steps {
+//	script {
+  //     bat ''' D:\Laptop\Software\curl-7.68.0-win64-mingw\bin\curl http://localhost:8081/repository/mymaven1/com/javatpoint/CubeGeneratorWeb/1/CubeGeneratorWeb-1.war -o D:\Laptop\Software\Tomcat\apache-tomcat-8.5.51\webapps\\CubeGeneratorWeb-1.war'''
+//	}
+//	}
+//	}
     }
 }
